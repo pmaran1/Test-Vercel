@@ -3,7 +3,8 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { Tone, CommitResult } from "../types";
 
 export const generateCommitMessage = async (prompt: string, tone: Tone): Promise<CommitResult> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+  // Directly using process.env.API_KEY as per instructions
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const systemInstruction = `You are an expert software engineer who writes perfect Git commit messages.
     Your task is to take a raw description of code changes and turn it into a high-quality commit message.
@@ -42,6 +43,6 @@ export const generateCommitMessage = async (prompt: string, tone: Tone): Promise
     return JSON.parse(text) as CommitResult;
   } catch (error) {
     console.error("Gemini API Error:", error);
-    throw new Error("Failed to generate commit message. Please check your API key and network.");
+    throw new Error("Failed to generate commit message. Please check your Vercel Environment Variables for API_KEY.");
   }
 };
