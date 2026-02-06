@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tone, AppState, CommitResult } from './types';
 import { generateCommitMessage } from './services/geminiService';
 
@@ -23,6 +23,14 @@ const App: React.FC = () => {
     result: null,
     error: null,
   });
+
+  const [isConfigured, setIsConfigured] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    // Check if API key is present in environment
+    const key = process.env.API_KEY;
+    setIsConfigured(!!key && key !== "undefined" && key !== "");
+  }, []);
 
   const handleGenerate = async () => {
     if (!state.input.trim()) {
@@ -58,10 +66,17 @@ const App: React.FC = () => {
           </h1>
         </div>
         <div className="flex items-center gap-4">
-           <div className="hidden sm:flex items-center gap-2 text-emerald-400 text-xs font-medium bg-emerald-400/10 px-3 py-1 rounded-full border border-emerald-400/20">
-            <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-            Vercel Live Demo
-          </div>
+           {isConfigured === false ? (
+              <div className="flex items-center gap-2 text-amber-400 text-xs font-medium bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">
+                <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
+                API Key Missing
+              </div>
+           ) : (
+             <div className="hidden sm:flex items-center gap-2 text-emerald-400 text-xs font-medium bg-emerald-400/10 px-3 py-1 rounded-full border border-emerald-400/20">
+               <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+               Vercel Live Demo
+             </div>
+           )}
         </div>
       </header>
 
@@ -105,8 +120,13 @@ const App: React.FC = () => {
         </div>
 
         {state.error && (
-          <div className="mt-6 p-4 bg-red-900/20 border border-red-800 rounded-xl text-red-400 text-sm">
-            {state.error}
+          <div className="mt-6 p-4 bg-red-900/20 border border-red-800 rounded-xl text-red-400 text-sm whitespace-pre-wrap">
+            <strong>Error:</strong> {state.error}
+            {state.error.includes("API_KEY") && (
+              <div className="mt-2 text-xs opacity-80">
+                Go to Vercel Settings > Environment Variables and add "API_KEY" with your Gemini key.
+              </div>
+            )}
           </div>
         )}
 
