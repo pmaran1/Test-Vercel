@@ -1,0 +1,5 @@
+{
+  "name": "CommitWise AI",
+  "description": "A sleek, AI-powered developer tool that generates meaningful Git commit messages and README snippets using Gemini 3 Flash. Designed to streamline your GitHub workflow and ensure your deployment history looks professional.",
+  "requestFramePermissions": []
+}
