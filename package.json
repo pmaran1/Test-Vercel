@@ -1,10 +1,7 @@
 
 {
-  "name": "commitwise-ai",
+  "name": "vercel-static-demo",
   "version": "1.0.0",
   "private": true,
-  "description": "AI-powered Git commit message generator for Vercel/GitHub demo.",
-  "engines": {
-    "node": ">=20.0.0"
-  }
+  "description": "A pure static page for Vercel/GitHub deployment verification."
 }
