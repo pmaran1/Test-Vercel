@@ -6,9 +6,5 @@
   "description": "AI-powered Git commit message generator for Vercel/GitHub demo.",
   "engines": {
     "node": ">=20.0.0"
-  },
-  "scripts": {
-    "start": "serve .",
-    "build": "echo 'No build step required for ESM/Import Maps demo'"
   }
 }
